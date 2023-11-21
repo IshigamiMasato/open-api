@@ -100,6 +100,21 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    swagger-ui:
+        image: swaggerapi/swagger-ui
+        ports:
+            - "8002:8080"
+        volumes:
+            - ./prism:/prism:ro
+        environment:
+            SWAGGER_JSON: /prism/openapi.yaml
+    swagger-api:
+        image: stoplight/prism
+        ports:
+            - "8003:4010"
+        command: mock -h 0.0.0.0 /prism/openapi.yaml
+        volumes:
+            - ./prism:/prism:ro
 networks:
     sail:
         driver: bridge
