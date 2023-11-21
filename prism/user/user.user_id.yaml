@@ -1,0 +1,144 @@
+get:
+  summary: ユーザの基本情報を取得
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ユーザID
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: 成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 姓
+                maxLength: 50
+                example: 鈴木　一郎
+              name_kana:
+                type: string
+                description: 名
+                example: スズキ　イチロウ
+              age:
+                type: integer
+                description: 年齢
+                example: 30
+              tel_m_1:
+                type: string
+                description: 携帯電話番号1
+                example: '070'
+              tel_m_2:
+                type: string
+                description: 携帯電話番号2
+                example: '1111'
+              tel_m_3:
+                type: string
+                description: 携帯電話番号3
+                example: '2222'
+              email:
+                type: string
+                description: メールアドレス
+                example: tes@tes.com
+    '404':
+      description: ユーザ情報がありません
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: '0000001'
+              message:
+                type: string
+                example: ユーザ情報がありません
+
+put:
+  summary: ユーザの基本情報を更新
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 姓
+              maxLength: 50
+            name_kana:
+              type: string
+              description: 名
+              maxLength: 50
+            tel_m_1:
+              type: string
+              description: 携帯電話番号1
+              pattern: '^0[7-9]0$'
+            tel_m_2:
+              type: string
+              description: 携帯電話番号2
+              pattern: '^\d{4}$'
+            tel_m_3:
+              type: string
+              description: 携帯電話番号3
+              pattern: '^\d{4}$'
+            email:
+              type: string
+              description: メールアドレス
+              maxLength: 100
+              pattern: '^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$'
+            current_password:
+              type: string
+              description: 現在のパスワード
+              pattern: '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$'
+            new_password:
+              type: string
+              description: 新規のパスワード
+              pattern: '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$'
+          required:
+            - name
+            - name_kana
+            - tel_m_1
+            - tel_m_2
+            - tel_m_3
+            - email
+  responses:
+    '200':
+      description: Successful operation
+    '400':
+      description: 不正なパラメータです
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: '0050001'
+              message:
+                type: string
+                example: 不正なパラメータです
+    '404':
+      description: ユーザ情報がありません
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: '0000001'
+              message:
+                type: string
+                example: ユーザ情報がありません

@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: 'テストAPI'
+  version: 1.0.0
+servers:
+  - url: http://localhost:4010
+    description: 'ローカル環境'
+paths:
+  #user
+  /api/user/{user_id}:
+    $ref: './user/user.user_id.yaml'
