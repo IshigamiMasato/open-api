@@ -29,11 +29,8 @@ class UserGetTest extends TestCase
         // 不要なパラメータが入っていてもエラーにならない
         // swagger UIに映し出すディレクトリ構造だと、テストが実施できない
         $response = $this->get('api/user/1');
-        $response = [
-            'nam' => 1
-        ];
 
-        $result = $this->validator->validate('getUser', 200, $response);
+        $result = $this->validator->validate('getUser', 200, json_decode($response->getContent(), true));
         $this->assertFalse($result->hasErrors(), $result);
     }
 
@@ -42,13 +39,9 @@ class UserGetTest extends TestCase
      */
     public function testNotFoundResponse()
     {
-        $response = [
-            'code'    => '0000001',
-            'message' => 'ユーザ情報がありません',
-            'hoge' => 'ほげ',
-        ];
+        $response = $this->get('api/user/3');
 
-        $result = $this->validator->validate('getUser', 404, $response);
+        $result = $this->validator->validate('getUser', 404, json_decode($response->getContent(), true));
         $this->assertFalse($result->hasErrors(), $result);
     }
 }
