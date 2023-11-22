@@ -1,5 +1,6 @@
 get:
   summary: ユーザの基本情報を取得
+  operationId: getUser
   parameters:
     - name: user_id
       in: path
@@ -44,6 +45,14 @@ get:
                 type: string
                 description: メールアドレス
                 example: tes@tes.com
+            required:
+              - name
+              - name_kana
+              - age
+              - tel_m_1
+              - tel_m_2
+              - tel_m_3
+              - email
     '404':
       description: ユーザ情報がありません
       content:
@@ -57,9 +66,13 @@ get:
               message:
                 type: string
                 example: ユーザ情報がありません
+            required:
+              - code
+              - message
 
 put:
   summary: ユーザの基本情報を更新
+  operationId: updateUser
   parameters:
     - name: user_id
       in: path
@@ -115,7 +128,16 @@ put:
             - email
   responses:
     '200':
-      description: Successful operation
+      description: 成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
     '400':
       description: 不正なパラメータです
       content:
